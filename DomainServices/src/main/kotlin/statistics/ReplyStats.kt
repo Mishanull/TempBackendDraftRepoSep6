@@ -1,0 +1,4 @@
+package Statistics
+
+class ReplyStats {
+}

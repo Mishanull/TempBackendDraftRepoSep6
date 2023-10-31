@@ -1,0 +1,4 @@
+package validators
+
+class ReplyValidator {
+}
