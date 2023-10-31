@@ -2,15 +2,10 @@ plugins {
     kotlin("jvm") version "1.9.0"
 }
 
-group = "org.sep6"
-version = "1.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    testImplementation(kotlin("test"))
+    implementation(project(mapOf("path" to ":DomainServices")))
+  implementation(project(mapOf("path" to ":DomainCore")))
+  testImplementation(kotlin("test"))
 }
 
 tasks.test {

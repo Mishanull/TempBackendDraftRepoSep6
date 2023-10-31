@@ -1,5 +1,5 @@
-package Validators
+package validators
 
 interface Validator<T> {
-    fun validate(entity: T): List<String>
+    fun  validate(entity: T)
 }

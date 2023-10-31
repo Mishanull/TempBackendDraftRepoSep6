@@ -3,18 +3,22 @@ package com.sep6.infrastructureservices.persistence.entities
 import jakarta.persistence.*
 import java.time.LocalDate
 import java.util.*
+import models.User
+import models.enums.UserRole
+import kotlin.collections.HashSet
 
 @Entity
-@Table(name = "users")
-data class User(
+@NoArgConstructor
+@Table(name = "USERS")
+class UserEntity(
   @Id
-  @Column(name = "user_id")
-  val userId: UUID? = null,
+  @Column(name = "userId")
+  val userId: UUID,
 
-  @Column(name = "username", nullable = false)
+  @Column(name = "username", nullable = false, unique = true)
   val username: String,
 
-  @Column(name = "email", nullable = false)
+  @Column(name = "email", nullable = false, unique = true)
   val email: String,
 
   @Column(name = "birthday", nullable = false)
@@ -22,13 +26,50 @@ data class User(
 
   @Enumerated(EnumType.STRING)
   @Column(name = "role", nullable = false)
-  val role: String
+  val role: UserRole,
+
+  @ManyToMany
+  @JoinTable(
+    name = "user_followers",
+    joinColumns = [JoinColumn(name = "user_id")],
+    inverseJoinColumns = [JoinColumn(name = "follower_id")]
+  )
+  var followers: MutableSet<UserEntity>? = HashSet(),
+
+  @ManyToMany(mappedBy = "followers")
+  var following: MutableSet<UserEntity>? = HashSet(),
+
+  @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+  val favoriteItemLists: MutableSet<FavoriteListEntity>? = HashSet(),
+
+  @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+  val reviewList: MutableSet<ReviewEntity>? = HashSet(),
+
+  @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+  val commentList: MutableSet<CommentEntity>? = HashSet(),
+
+  @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+  val replyList: MutableSet<CommentEntity>? = HashSet()
 ) {
-  constructor(user: com.example.domain.core.User) : this(
+  constructor(user: User) : this(
     user.userId,
     user.username,
     user.email,
     user.birthday,
-    user.role.name
+    user.role
   )
+
+  constructor(otherUserId: UUID) : this(
+    otherUserId, "", "", LocalDate.now(), UserRole.STANDARD_USER
+  )
+
+  fun mapToDomain(): User {
+    return User(
+      userId = userId,
+      username = username,
+      email = email,
+      birthday = birthday,
+      role = role
+    )
+  }
 }

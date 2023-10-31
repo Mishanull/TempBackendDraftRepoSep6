@@ -1,22 +1,14 @@
-package Models
+package models
 
+import models.enums.UserRole
+import org.jetbrains.annotations.NotNull
 import java.time.LocalDate
 import java.util.UUID
 
 data class User(
-    val username: String,
-    val email: String,
-    val birthday: LocalDate,
-    val userId: UUID = UUID.randomUUID(), // Generate a UUID for the user during object creation
-    val role: UserRole
-) {
-    // Additional properties or methods can be added here
-}
-
-enum class UserRole {
-    ADMIN,
-    STANDARD_USER,
-    MODERATOR
-}
-
-
+    val userId: UUID = UUID.randomUUID(),
+    @NotNull val username: String,
+    @NotNull val email: String,
+    @NotNull val birthday: LocalDate,
+    @NotNull val role: UserRole
+)

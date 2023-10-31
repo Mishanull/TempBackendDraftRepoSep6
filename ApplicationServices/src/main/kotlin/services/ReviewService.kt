@@ -1,4 +1,6 @@
 package services
 
-class ReviewService {
+import repository_contracts.ReviewRepository
+
+class ReviewService (val repository: ReviewRepository){
 }

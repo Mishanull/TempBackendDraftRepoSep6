@@ -1,22 +1,21 @@
 package com.sep6.infrastructureservices.persistence.entities
 
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.Table
-
+import jakarta.persistence.*
+import java.sql.Timestamp
+import java.util.*
 
 @Entity
-@Table(name = "comments")
-data class CommentEntity(
+@Table(name = "COMMENTS")
+class CommentEntity(
   @Id
   @Column(name = "comment_id")
   val commentId: UUID = UUID.randomUUID(),
 
-  @ManyToOne
+  @ManyToOne(cascade = [CascadeType.ALL])
   @JoinColumn(name = "user_id", nullable = false)
   val user: UserEntity,
 
-  @ManyToOne
+  @ManyToOne(cascade = [CascadeType.ALL])
   @JoinColumn(name = "review_id", nullable = false)
   val review: ReviewEntity,
 

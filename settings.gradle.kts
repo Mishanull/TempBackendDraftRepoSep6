@@ -10,3 +10,7 @@ plugins {
 }
 
 rootProject.name = "MovieSocialNetwork"
+include("DomainCore")
+include("DomainServices")
+include("ApplicationServices")
+include("InfrastructureServices")

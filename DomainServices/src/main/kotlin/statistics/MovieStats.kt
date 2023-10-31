@@ -1,4 +1,4 @@
-package Statistics
+package statistics
 
 class MovieStats {
 }

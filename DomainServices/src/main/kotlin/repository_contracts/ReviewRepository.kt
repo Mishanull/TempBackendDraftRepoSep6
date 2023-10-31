@@ -1,4 +1,4 @@
-package RepositoryContracts
+package repository_contracts
 
 import models.Review
 import java.util.*

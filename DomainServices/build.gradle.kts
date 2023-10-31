@@ -1,22 +1,17 @@
 plugins {
-    kotlin("jvm") version "1.9.0"
+  kotlin("jvm") version "1.9.0"
 }
 
-group = "org.sep6"
-version = "1.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
-}
 
 dependencies {
-    testImplementation(kotlin("test"))
+  implementation(project(mapOf("path" to ":DomainCore")))
+  testImplementation(kotlin("test"))
 }
 
 tasks.test {
-    useJUnitPlatform()
+  useJUnitPlatform()
 }
 
 kotlin {
-    jvmToolchain(8)
+  jvmToolchain(8)
 }
